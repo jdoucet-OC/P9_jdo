@@ -6,5 +6,7 @@ urlpatterns = [
     path('login', views.login, name="login"),
     path('', views.login, name="login"),
     path('flux', views.home, name="flux"),
-    path('logout', views.logout, name="logout")
+    path('logout', views.logout, name="logout"),
+    path('new-ticket', views.make_ticket, name="new-ticket"),
+    path('new-review', views.make_review, name="new-review")
 ]
