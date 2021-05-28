@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <button>Demander une critique</button>
+    <button>Créer une critique</button>
+</div>
+<div>
+    {% for ticket in tickets %}
+        {{ticket.title}}<br>
+    {% endfor %}
+    {% for review in reviews %}
+        {{review.headline}}<br>
+    {% endfor %}
+</div>
+{% endblock %}
