@@ -13,4 +13,7 @@ class ReviewForm(ModelForm):
     """"""
     class Meta:
         model = Review
-        fields = ['ticket', 'rating', 'headline', 'body']
+        title = None
+        description = None
+        image = None
+        fields = ['rating', 'headline', 'body']
