@@ -7,6 +7,7 @@ from django.shortcuts import render
 from .forms import TicketForm, ReviewForm
 from itertools import chain
 
+
 def login(request):
     """"""
     if request.method == "POST":
@@ -17,7 +18,8 @@ def login(request):
             auth.login(request, user)
             return redirect('flux')
         else:
-            messages.info(request, "*verifiez votre mot de passe ou nom d'utilisateur")
+            messages.info(request,
+                          "*verifiez votre mot de passe ou nom d'utilisateur")
             return redirect('login')
 
     else:
@@ -71,3 +73,25 @@ def make_review(request):
     else:
         form = ReviewForm()
     return render(request, "make_review.html", {'form': form})
+
+
+@login_required(login_url='login')
+def subscribe(request):
+    """"""
+    user = request.user
+    follows = UserFollows.objects.filter(user=user.id)
+    followed = UserFollows.objects.filter(followed_user=user.id)
+    return render(request, "subscribe.html",
+                  {"follows": follows, "followed": followed})
+
+
+@login_required(login_url='login')
+def posts(request):
+    """"""
+    user = request.user
+    tickets = Ticket.objects.filter(user=user.id)
+    reviews = Review.objects.filter(user=user.id)
+    combined = sorted(chain(tickets, reviews),
+                      key=lambda instance: instance.time_created,
+                      reverse=True)
+    return render(request, 'posts.html', context={'objects': combined})

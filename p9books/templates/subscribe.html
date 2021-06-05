@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h3>Abonnements</h3>
+    {% for follow in follows %}
+        <span>{{follow.followed_user.username}}</span>
+        <button>Désabonner</button>
+        <br>
+        <br>
+    {% endfor %}
+    <br>
+    <h3>Abonnés</h3>
+    {% for follow in followed %}
+        <span>{{follow.user.username}}</span><br>
+    {% endfor %}
+</div>
+{% endblock %}

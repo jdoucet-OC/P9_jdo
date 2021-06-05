@@ -2,24 +2,23 @@
 
 {% block content %}
 <div>
-    <a href="/new-ticket" class="btn btn-primary">Demander une critique</a>
-    <a href="/new-review" class="btn btn-primary">Créer une critique</a>
-</div>
-<div>
     {% for obj in objects %}
         {% if obj.title %}
             <span>
-                {{obj.user}} a demandé une critique {{obj.time_created}}<br>
+                Vous avez a demandé une critique {{obj.time_created}}<br>
                 {{obj.title}}<br>
                 {{obj.description}}<br>
-                <a href="/new-review" class="btn btn-primary">Créer une critique</a>
+                <a href="#" class="btn btn-primary">Modifier</a>
+                <a href="#" class="btn btn-primary">Supprimer</a>
             </span><br><br><br>
         {% else %}
             <span>
-                {{obj.user}} à publié une revue {{obj.time_created}}<br>
+                Vous avez à publié une revue {{obj.time_created}}<br>
                 Ticket {{obj.ticket.id}} - {{obj.ticket.user}}<br>
                 {{obj.ticket.title}}<br>
                 {{obj.ticket.description}}<br>
+                <a href="#" class="btn btn-primary">Modifier</a>
+                <a href="#" class="btn btn-primary">Supprimer</a>
             </span><br><br><br>
         {% endif %}
     {% endfor %}

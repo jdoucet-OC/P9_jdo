@@ -6,21 +6,26 @@
 </head>
 
 <!-- As a heading -->
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <a class="navbar-brand">LITReview</a>
-
-    {% if user.is_authenticated %}
     <div>
         <ul class="navbar-nav mr-auto">
+        {% if user.is_authenticated %}
             <li class="nav-item active">
-                <a class="nav-link" href="logout">Logout</a>
+                <a class="nav-link" href="flux">Flux</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">Hello, {{user.first_name}}</a>
+                <a class="nav-link" href="posts">Posts</a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="subscribe">Abonnements</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="flux">Se déconnecter</a>
+            </li>
+        {% endif %}
         </ul>
     </div>
-    {% endif %}
 </nav>
 <body>
     <main>
