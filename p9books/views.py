@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .forms import TicketForm, ReviewForm
 from itertools import chain
+from django.forms import formset_factory
 
 
 def login(request):
@@ -64,15 +65,22 @@ def make_ticket(request):
 def make_review(request):
     """"""
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            ticket = form.save(commit=False)
+        reviewform = ReviewForm(request.POST)
+        ticketform = TicketForm(request.POST)
+        if reviewform.is_valid() and ticketform.is_valid():
+            review = reviewform.save(commit=False)
+            ticket = ticketform.save(commit=False)
+            review.user = request.user
             ticket.user = request.user
             ticket.save()
+            review.ticket = ticket
+            review.save()
             return redirect('flux')
     else:
-        form = ReviewForm()
-    return render(request, "make_review.html", {'form': form})
+        reviewform = ReviewForm()
+        ticketform = TicketForm()
+    return render(request, "make_review.html",
+                  {'reviewform': reviewform, 'ticketform': ticketform})
 
 
 @login_required(login_url='login')
@@ -95,3 +103,10 @@ def posts(request):
                       key=lambda instance: instance.time_created,
                       reverse=True)
     return render(request, 'posts.html', context={'objects': combined})
+
+
+@login_required(login_url='login')
+def answer_ticket(request, **kwargs):
+    """"""
+    print(kwargs)
+    return render(request, "answer_ticket.html")
