@@ -12,7 +12,7 @@
                 {{obj.user}} a demandé une critique {{obj.time_created}}<br>
                 {{obj.title}}<br>
                 {{obj.description}}<br>
-                {{obj.image}}<br>
+                {{obj.image}}<br><br>
                 <a href="{% url 'answer' obj.id %}" class="btn btn-primary">Créer une critique</a>
             </span><br><br><br>
         {% else %}
