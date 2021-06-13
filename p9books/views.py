@@ -50,7 +50,7 @@ def home(request):
 def make_ticket(request):
     """"""
     if request.method == 'POST':
-        form = TicketForm(request.POST)
+        form = TicketForm(request.POST, request.FILES or None)
         if form.is_valid():
             ticket = form.save(commit=False)
             ticket.user = request.user
@@ -66,7 +66,7 @@ def make_review(request):
     """"""
     if request.method == 'POST':
         reviewform = ReviewForm(request.POST)
-        ticketform = TicketForm(request.POST)
+        ticketform = TicketForm(request.POST, request.FILES or None)
         if reviewform.is_valid() and ticketform.is_valid():
             review = reviewform.save(commit=False)
             ticket = ticketform.save(commit=False)
@@ -108,5 +108,18 @@ def posts(request):
 @login_required(login_url='login')
 def answer_ticket(request, **kwargs):
     """"""
-    print(kwargs)
-    return render(request, "answer_ticket.html")
+    ticketid = int(kwargs['tiquetid'])
+    ticket = Ticket.objects.get(id=ticketid)
+    if request.method == 'POST':
+        reviewform = ReviewForm(request.POST)
+        if reviewform.is_valid():
+            review = reviewform.save(commit=False)
+            review.user = request.user
+            review.ticket = ticket
+            review.save()
+            return redirect('flux')
+    else:
+        reviewform = ReviewForm()
+
+    return render(request, "answer_ticket.html",
+                  {'reviewform': reviewform, 'ticket': ticket})
