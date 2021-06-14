@@ -1,5 +1,4 @@
-from django.urls import path, include, re_path
-from django.contrib.auth import views as auth_views
+from django.urls import path, re_path
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
@@ -13,6 +12,10 @@ urlpatterns = [
     path('new-review', views.make_review, name="new-review"),
     path('subscribe', views.subscribe, name="subscribe"),
     path('posts', views.posts, name="posts"),
-    re_path(r'answer/(?P<tiquetid>[^/]+)$', views.answer_ticket, name='answer')
+    re_path(r'answer/(?P<tiquetid>[^/]+)$',
+            views.answer_ticket, name='answer'),
+    re_path(r'edit-ticket/(?P<tiquetid>[^/]+)$',
+            views.edit_ticket, name='edit-ticket'),
+    re_path(r'edit-review/(?P<reviewid>[^/]+)$',
+            views.edit_review, name='edit-review')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

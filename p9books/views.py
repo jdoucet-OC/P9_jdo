@@ -123,3 +123,22 @@ def answer_ticket(request, **kwargs):
 
     return render(request, "answer_ticket.html",
                   {'reviewform': reviewform, 'ticket': ticket})
+
+
+@login_required(login_url='login')
+def edit_ticket(request, **kwargs):
+    """"""
+    ticketid = int(kwargs['tiquetid'])
+    ticket = Ticket.objects.get(id=ticketid)
+    ticketform = TicketForm(request.POST or None, instance=ticket)
+    if ticketform.is_valid():
+        ticketform.save()
+        return redirect('posts')
+    return render(request, "edit_ticket.html", {'ticketform': ticketform})
+
+
+@login_required(login_url='login')
+def edit_review(request, **kwargs):
+    """"""
+    print(kwargs)
+    return render(request, "edit_review.html")
