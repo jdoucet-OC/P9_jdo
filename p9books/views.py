@@ -152,3 +152,39 @@ def edit_review(request, **kwargs):
         return redirect('posts')
     return render(request, "edit_review.html",
                   {'reviewform': reviewform, 'ticket': ticket})
+
+
+@login_required(login_url='login')
+def delete_ticket(request, **kwargs):
+    """"""
+    ticketid = int(kwargs['tiquetid'])
+    ticket = Ticket.objects.get(id=ticketid)
+    if ticket.user != request.user:
+        raise Http404("You are not allowed to edit this Ticket")
+    else:
+        ticket.delete()
+    return redirect('posts')
+
+
+@login_required(login_url='login')
+def delete_review(request, **kwargs):
+    """"""
+    reviewid = int(kwargs['reviewid'])
+    review = Review.objects.get(id=reviewid)
+    if review.user != request.user:
+        raise Http404("You are not allowed to edit this Review")
+    else:
+        review.delete()
+    return redirect('posts')
+
+
+@login_required(login_url='login')
+def unsubscribe(request, **kwargs):
+    """"""
+    followid = int(kwargs['followid'])
+    follow = UserFollows.objects.get(id=followid)
+    if follow.user != request.user:
+        raise Http404("You are not allowed to edit this Review")
+    else:
+        follow.delete()
+    return redirect('subscribe')

@@ -17,5 +17,11 @@ urlpatterns = [
     re_path(r'edit-ticket/(?P<tiquetid>[^/]+)$',
             views.edit_ticket, name='edit-ticket'),
     re_path(r'edit-review/(?P<reviewid>[^/]+)$',
-            views.edit_review, name='edit-review')
+            views.edit_review, name='edit-review'),
+    re_path(r'delete-ticket/(?P<tiquetid>[^/]+)$',
+            views.delete_ticket, name='delete-ticket'),
+    re_path(r'delete-review/(?P<reviewid>[^/]+)$',
+            views.delete_review, name='delete-review'),
+    re_path(r'unsubscribe/(?P<followid>[^/]+)$',
+            views.unsubscribe, name='unsubscribe')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
