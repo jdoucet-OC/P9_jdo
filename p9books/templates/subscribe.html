@@ -6,7 +6,7 @@
     <h3>Abonnements</h3>
     {% for follow in follows %}
         <span>{{follow.followed_user.username}}</span>
-        <button>Désabonner</button>
+        <a href="{% url 'unsubscribe' follow.id %}" class="btn btn-primary">Désabonner</a>
         <br>
         <br>
     {% endfor %}

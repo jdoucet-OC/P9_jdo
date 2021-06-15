@@ -9,7 +9,7 @@
                 {{obj.title}}<br>
                 {{obj.description}}<br>
                 <a href="{% url 'edit-ticket' obj.id %}" class="btn btn-primary">Modifier</a>
-                <a href="#" class="btn btn-primary">Supprimer</a>
+                <a href="{% url 'delete-ticket' obj.id %}" class="btn btn-primary">Supprimer</a>
             </span><br><br><br>
         {% else %}
             <span>
@@ -18,7 +18,7 @@
                 {{obj.ticket.title}}<br>
                 {{obj.ticket.description}}<br>
                 <a href="{% url 'edit-review' obj.id %}" class="btn btn-primary">Modifier</a>
-                <a href="#" class="btn btn-primary">Supprimer</a>
+                <a href="{% url 'delete-review' obj.id %}" class="btn btn-primary">Supprimer</a>
             </span><br><br><br>
         {% endif %}
     {% endfor %}
