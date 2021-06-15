@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-{{ticket.title}}
 <form method="POST" class="post-form">
     {% csrf_token %}
-    {{ reviewform.as_p }}
+    {{ ticketform.as_p }}
 
     <button type="submit" class="save btn btn-default">Save</button>
 </form>

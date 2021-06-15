@@ -3,10 +3,9 @@ from django.contrib.auth.models import auth
 from django.contrib import messages
 from .models import Review, Ticket, UserFollows
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 from .forms import TicketForm, ReviewForm
 from itertools import chain
-from django.forms import formset_factory
+from django.http import Http404
 
 
 def login(request):
@@ -122,4 +121,34 @@ def answer_ticket(request, **kwargs):
         reviewform = ReviewForm()
 
     return render(request, "answer_ticket.html",
+                  {'reviewform': reviewform, 'ticket': ticket})
+
+
+@login_required(login_url='login')
+def edit_ticket(request, **kwargs):
+    """"""
+    ticketid = int(kwargs['tiquetid'])
+    ticket = Ticket.objects.get(id=ticketid)
+    if ticket.user != request.user:
+        raise Http404("You are not allowed to edit this Ticket")
+    ticketform = TicketForm(request.POST or None, instance=ticket)
+    if ticketform.is_valid():
+        ticketform.save()
+        return redirect('posts')
+    return render(request, "edit_ticket.html", {'ticketform': ticketform})
+
+
+@login_required(login_url='login')
+def edit_review(request, **kwargs):
+    """"""
+    reviewid = int(kwargs['reviewid'])
+    review = Review.objects.get(id=reviewid)
+    if review.user != request.user:
+        raise Http404("You are not allowed to edit this Review")
+    ticket = review.ticket
+    reviewform = ReviewForm(request.POST or None, instance=review)
+    if reviewform.is_valid():
+        reviewform.save()
+        return redirect('posts')
+    return render(request, "edit_review.html",
                   {'reviewform': reviewform, 'ticket': ticket})

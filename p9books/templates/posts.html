@@ -8,7 +8,7 @@
                 Vous avez a demandé une critique {{obj.time_created}}<br>
                 {{obj.title}}<br>
                 {{obj.description}}<br>
-                <a href="#" class="btn btn-primary">Modifier</a>
+                <a href="{% url 'edit-ticket' obj.id %}" class="btn btn-primary">Modifier</a>
                 <a href="#" class="btn btn-primary">Supprimer</a>
             </span><br><br><br>
         {% else %}
@@ -17,7 +17,7 @@
                 Ticket {{obj.ticket.id}} - {{obj.ticket.user}}<br>
                 {{obj.ticket.title}}<br>
                 {{obj.ticket.description}}<br>
-                <a href="#" class="btn btn-primary">Modifier</a>
+                <a href="{% url 'edit-review' obj.id %}" class="btn btn-primary">Modifier</a>
                 <a href="#" class="btn btn-primary">Supprimer</a>
             </span><br><br><br>
         {% endif %}
