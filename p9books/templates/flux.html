@@ -1,30 +1,60 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
+<div class="container">
     <a href="/new-ticket" class="btn btn-primary">Demander une critique</a>
     <a href="/new-review" class="btn btn-primary">Créer une critique</a>
 </div>
-<div>
+<br><br><br>
+<div class="container">
     {% for obj in objects %}
         {% if obj.title %}
-            <span>
-                {{obj.user}} a demandé une critique {{obj.time_created}}<br>
-                {{obj.title}}<br>
-                {{obj.description}}<br>
+            <div class="container border border-dark">
+
+                {% if obj.user == user %}
+                <div class="row">
+                    <div class="col-8">Vous avez demandé une critique</div>
+                    <div class="col-4">{{obj.time_created}}</div>
+                </div>
+                {% else %}
+                <div class="row">
+                    <div class="col-8">{{obj.user}} a demandé une critique</div>
+                    <div class="col-4">{{obj.time_created}}</div>
+                </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-8">{{obj.title}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{obj.description}}</div>
+                </div>
                 {% load static %}
                 {% if obj.image %}
-                    <img src="{{obj.image.url}}"/>
+                    <div class="row">
+                        <div class="col-8">
+                            <img src="{{obj.image.url}}"/>
+                        </div>
+                    </div>
                 {% endif %}
-                <a href="{% url 'answer' obj.id %}" class="btn btn-primary">Créer une critique</a>
-            </span><br><br><br>
+                <div class="row justify-content-end">
+                    <div class="col-4">
+                        <a href="{% url 'answer' obj.id %}" class="btn btn-primary">Créer une critique</a>
+                    </div>
+                </div>
+            </div><br><br><br>
         {% else %}
-            <span>
-                {{obj.user}} à publié une revue {{obj.time_created}}<br>
-                Ticket {{obj.ticket.id}} - {{obj.ticket.user}}<br>
-                {{obj.ticket.title}}<br>
-                {{obj.ticket.description}}<br>
-            </span><br><br><br>
+            <div class="container border border-dark">
+                {% if obj.user == user %}
+                    Vous avez publié une critique {{obj.time_created}}
+                {% else %}
+                    {{obj.user}} à publié une critique {{obj.time_created}}<br>
+                {% endif %}
+                <div class="container border border-dark">
+                    Ticket {{obj.ticket.id}} - {{obj.ticket.user}}<br>
+                    {{obj.ticket.title}}<br>
+                    {{obj.ticket.description}}<br>
+                </div>
+            </div><br><br><br>
         {% endif %}
     {% endfor %}
 </div>
