@@ -1,60 +1,80 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
+<div class="container mb-3">
     <a href="/new-ticket" class="btn btn-primary">Demander une critique</a>
     <a href="/new-review" class="btn btn-primary">Créer une critique</a>
 </div>
-<br><br><br>
+
 <div class="container">
     {% for obj in objects %}
         {% if obj.title %}
-            <div class="container border border-dark">
+            <div class="container border border-dark mb-5">
 
                 {% if obj.user == user %}
-                <div class="row">
-                    <div class="col-8">Vous avez demandé une critique</div>
-                    <div class="col-4">{{obj.time_created}}</div>
+                <div class="row mt-2 mb-2">
+                    <div class="col-10">Vous avez demandé une critique</div>
+                    <div class="col-2">{{obj.time_created}}</div>
                 </div>
                 {% else %}
-                <div class="row">
-                    <div class="col-8">{{obj.user}} a demandé une critique</div>
-                    <div class="col-4">{{obj.time_created}}</div>
+                <div class="row mt-2 mb-2">
+                    <div class="col-10">{{obj.user}} a demandé une critique</div>
+                    <div class="col-2">{{obj.time_created}}</div>
                 </div>
                 {% endif %}
-                <div class="row">
-                    <div class="col-8">{{obj.title}}</div>
+                <div class="row mt-2 mb-2">
+                    <div class="col-10">{{obj.title}}</div>
                 </div>
-                <div class="row">
-                    <div class="col-8">{{obj.description}}</div>
+                <div class="row mt-2 mb-2">
+                    <div class="col-10">{{obj.description}}</div>
                 </div>
                 {% load static %}
                 {% if obj.image %}
-                    <div class="row">
-                        <div class="col-8">
+                    <div class="row mt-2 mb-2">
+                        <div class="col-10">
                             <img src="{{obj.image.url}}"/>
                         </div>
                     </div>
                 {% endif %}
-                <div class="row justify-content-end">
-                    <div class="col-4">
+                <div class="row justify-content-end mt-2 mb-2">
+                    <div class="col-2">
                         <a href="{% url 'answer' obj.id %}" class="btn btn-primary">Créer une critique</a>
                     </div>
                 </div>
-            </div><br><br><br>
+            </div>
         {% else %}
-            <div class="container border border-dark">
+            <div class="container border border-dark mb-5">
+
                 {% if obj.user == user %}
-                    Vous avez publié une critique {{obj.time_created}}
+                    <div class="row mt-2 mb-2">
+                        <div class="col-10">Vous avez publié une critique</div>
+                        <div class="col-2">{{obj.time_created}}</div>
+                    </div>
                 {% else %}
-                    {{obj.user}} à publié une critique {{obj.time_created}}<br>
+                    <div class="row mt-2 mb-2">
+                        <div class="col-10">{{obj.user}} a publié une critique</div>
+                        <div class="col-2">{{obj.time_created}}</div>
+                    </div>
                 {% endif %}
-                <div class="container border border-dark">
-                    Ticket {{obj.ticket.id}} - {{obj.ticket.user}}<br>
-                    {{obj.ticket.title}}<br>
-                    {{obj.ticket.description}}<br>
+                <div class="row mt-2 mb-2">
+                        <div class="col-10">{{obj.body}}</div>
                 </div>
-            </div><br><br><br>
+                <div class="container border border-dark mb-3 mt-3">
+                    <div class="row mt-2 mb-2">
+                        <div class="col-10">Ticket - {{obj.ticket.user}}</div>
+                    </div>
+                    <div class="row mt-2 mb-2">
+                        <div class="col-10">{{obj.ticket.title}}</div>
+                    </div>
+                    {% if obj.image %}
+                        <div class="row mt-2 mb-2">
+                            <div class="col-10">
+                                <img src="{{obj.image.url}}"/>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         {% endif %}
     {% endfor %}
 </div>

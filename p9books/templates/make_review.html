@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-{{ticket.title}}
-<form method="POST" class="post-form">
-    {% csrf_token %}
-    {{ ticketform.as_p }}
-    {{ reviewform.as_p }}
+<div class="container">
+    {{ticket.title}}
 
-    <button type="submit" class="save btn btn-default">Save</button>
-</form>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{ ticketform.as_p }}
+        {{ reviewform.as_p }}
+
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+</div>
 {% endblock %}
