@@ -1,25 +1,59 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
+<div class="container">
     {% for obj in objects %}
         {% if obj.title %}
-            <span>
-                Vous avez a demandé une critique {{obj.time_created}}<br>
-                {{obj.title}}<br>
-                {{obj.description}}<br>
-                <a href="{% url 'edit-ticket' obj.id %}" class="btn btn-primary">Modifier</a>
-                <a href="{% url 'delete-ticket' obj.id %}" class="btn btn-primary">Supprimer</a>
-            </span><br><br><br>
+            <div class="container border border-dark mb-5">
+                <div class="row mt-2 mb-2">
+                    <div class="col-10">Vous avez a demandé une critique</div>
+                    <div class="col-2">{{obj.time_created}}</div>
+                </div>
+                <div class="row mt-2 mb-2">
+                    <div class="col-10">{{obj.title}}</div>
+                </div>
+                <div class="row mt-2 mb-2">
+                    <div class="col-10">{{obj.description}}</div>
+                </div>
+                <div class="row justify-content-end mt-2 mb-2">
+                    <div class="col-2">
+                        <a href="{% url 'edit-ticket' obj.id %}" class="btn btn-primary">Modifier</a>
+                        <a href="{% url 'delete-ticket' obj.id %}" class="btn btn-primary">Supprimer</a>
+                    </div>
+                </div>
+                </div>
         {% else %}
-            <span>
-                Vous avez à publié une revue {{obj.time_created}}<br>
-                Ticket {{obj.ticket.id}} - {{obj.ticket.user}}<br>
-                {{obj.ticket.title}}<br>
-                {{obj.ticket.description}}<br>
-                <a href="{% url 'edit-review' obj.id %}" class="btn btn-primary">Modifier</a>
-                <a href="{% url 'delete-review' obj.id %}" class="btn btn-primary">Supprimer</a>
-            </span><br><br><br>
+            <div class="container border border-dark mb-5">
+                <div class="row mt-2 mb-2">
+                        <div class="col-10">Vous avez publié une critique</div>
+                        <div class="col-2">{{obj.time_created}}</div>
+                </div>
+                <div class="row mt-2 mb-2">
+                        <div class="col-10">{{obj.body}}</div>
+                </div>
+                <div class="container border border-dark mb-3 mt-3">
+                    <div class="row mt-2 mb-2">
+                        <div class="col-10">Ticket - {{obj.ticket.user}}</div>
+                    </div>
+                    <div class="row mt-2 mb-2">
+                        <div class="col-10">{{obj.ticket.title}}</div>
+                    </div>
+                    {% if obj.image %}
+                        <div class="row mt-2 mb-2">
+                            <div class="col-10">
+                                <img src="{{obj.image.url}}"/>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+            <div class="row justify-content-end mt-2 mb-2">
+                <div class="col-2">
+                    <a href="{% url 'edit-review' obj.id %}" class="btn btn-primary">Modifier</a>
+                    <a href="{% url 'delete-review' obj.id %}" class="btn btn-primary">Supprimer</a>
+                </div>
+            </div>
+            </div>
         {% endif %}
     {% endfor %}
 </div>
