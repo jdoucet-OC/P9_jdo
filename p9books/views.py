@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import auth
+from django.contrib.auth.models import auth, User
 from django.contrib import messages
 from .models import Review, Ticket, UserFollows
 from django.contrib.auth.decorators import login_required
 from .forms import TicketForm, ReviewForm
 from itertools import chain
 from django.http import Http404
+from django.views.generic.list import ListView
 
 
 def login(request):
@@ -188,3 +189,14 @@ def unsubscribe(request, **kwargs):
     else:
         follow.delete()
     return redirect('subscribe')
+
+
+class UserSearchView(ListView):
+    """"""
+    model = User
+    template_name = 'search_results.html'
+    context_object_name = 'all_search_results'
+
+    def get_queryset(self):
+        query = self.request.GET.get('username')
+        return User.objects.filter(username__contains=query)

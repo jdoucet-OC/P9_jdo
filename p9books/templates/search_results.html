@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h3>Suivre d'autres utilisateurs</h3>
+        <form action="{% url 'search-user' %}" method="get">
+            <input type="text" name="username" placeholder="Chercher">
+            <button type="submit">Search</button>
+        </form>
+
+        {% for result in all_search_results %}
+            {{ result.username }}
+        {% empty %}
+            <div>Aucun utilisateur trouvé</div>
+        {% endfor %}
+</div>
+{% endblock %}
