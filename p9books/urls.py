@@ -6,6 +6,7 @@ from django.conf import settings
 urlpatterns = [
     path('login', views.login, name="login"),
     path('', views.login, name="login"),
+    path('register', views.register, name="register"),
     path('flux', views.home, name="flux"),
     path('logout', views.logout, name="logout"),
     path('new-ticket', views.make_ticket, name="new-ticket"),

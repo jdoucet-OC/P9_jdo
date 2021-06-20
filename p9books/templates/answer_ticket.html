@@ -1,11 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-{{ticket.title}}
-<form method="POST" class="post-form">
-    {% csrf_token %}
-    {{ reviewform.as_p }}
+<div class="container">
+    <div class="container border border-dark p-4">
+        <div>Vous êtes en train de poster en réponse à</div>
+        <div class="container border border-dark m-4">
+            <div class="row">
+                    <div class="col-10">Vous avez a demandé une critique</div>
+                    <div class="col-2">{{ticket.time_created}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-10">{{ticket.title}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-10">{{ticket.description}}</div>
+                </div>
+        </div>
+    </div>
+    <form method="POST" class="post-form border border-dark p-3">
+        {% csrf_token %}
+        {{ reviewform.as_p }}
 
-    <button type="submit" class="save btn btn-default">Save</button>
-</form>
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+</div>
 {% endblock %}

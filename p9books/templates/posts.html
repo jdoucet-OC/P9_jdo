@@ -4,7 +4,7 @@
 <div class="container">
     {% for obj in objects %}
         {% if obj.title %}
-            <div class="container border border-dark mb-5">
+            <div class="container border border-dark mb-5 p-3">
                 <div class="row mt-2 mb-2">
                     <div class="col-10">Vous avez a demandé une critique</div>
                     <div class="col-2">{{obj.time_created}}</div>
@@ -15,7 +15,7 @@
                 <div class="row mt-2 mb-2">
                     <div class="col-10">{{obj.description}}</div>
                 </div>
-                <div class="row justify-content-end mt-2 mb-2">
+                <div class="row justify-content mt-2 mb-2">
                     <div class="col-2">
                         <a href="{% url 'edit-ticket' obj.id %}" class="btn btn-primary">Modifier</a>
                         <a href="{% url 'delete-ticket' obj.id %}" class="btn btn-primary">Supprimer</a>
@@ -23,7 +23,7 @@
                 </div>
                 </div>
         {% else %}
-            <div class="container border border-dark mb-5">
+            <div class="container border border-dark mb-5 p-3">
                 <div class="row mt-2 mb-2">
                         <div class="col-10">Vous avez publié une critique</div>
                         <div class="col-2">{{obj.time_created}}</div>
