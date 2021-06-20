@@ -1,6 +1,8 @@
 from django import forms
 from django.forms import ModelForm, Textarea
 from .models import Ticket, Review
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 class TicketForm(ModelForm):
@@ -28,8 +30,8 @@ class ReviewForm(ModelForm):
     class Meta:
         model = Review
         fields = ['headline', 'rating', 'body']
-        CHOICE = [('1', 1), ('2', 2), ('3', 3),
-                  ('4', 4), ('5', 5)]
+        CHOICE = [('1', 0), ('2', 1), ('3', 2),
+                  ('4', 3), ('5', 4), ('6', 5)]
         widgets = {
             'headline': forms.TextInput(
                 attrs={
@@ -42,7 +44,30 @@ class ReviewForm(ModelForm):
                 }
             ),
             'rating': forms.RadioSelect(
-                choices=CHOICE
+                choices=CHOICE,
+                attrs={
+                    'class': 'custom-li',
+                    'id':'testtt'
+                }
             )
         }
 
+
+class NewUserForm(UserCreationForm):
+
+    class Meta:
+        model = User
+        fields = ("username", "password1", "password2")
+
+    def __init__(self, *args, **kwargs):
+        super(NewUserForm, self).__init__(*args, **kwargs)
+
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['password1'].widget.attrs['class'] = 'form-control'
+        self.fields['password2'].widget.attrs['class'] = 'form-control'
+
+    def save(self, commit=True):
+        user = super(NewUserForm, self).save(commit=False)
+        if commit:
+            user.save()
+        return user

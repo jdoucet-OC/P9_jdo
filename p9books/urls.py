@@ -6,6 +6,7 @@ from django.conf import settings
 urlpatterns = [
     path('login', views.login, name="login"),
     path('', views.login, name="login"),
+    path('register', views.register, name="register"),
     path('flux', views.home, name="flux"),
     path('logout', views.logout, name="logout"),
     path('new-ticket', views.make_ticket, name="new-ticket"),
@@ -23,5 +24,7 @@ urlpatterns = [
     re_path(r'delete-review/(?P<reviewid>[^/]+)$',
             views.delete_review, name='delete-review'),
     re_path(r'unsubscribe/(?P<followid>[^/]+)$',
-            views.unsubscribe, name='unsubscribe')
+            views.unsubscribe, name='unsubscribe'),
+    path('search-user/', views.UserSearchView.as_view(),
+         name='search-user')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

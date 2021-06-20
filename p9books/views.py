@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import auth
+from django.contrib.auth.models import auth, User
 from django.contrib import messages
 from .models import Review, Ticket, UserFollows
 from django.contrib.auth.decorators import login_required
-from .forms import TicketForm, ReviewForm
+from .forms import TicketForm, ReviewForm, NewUserForm
 from itertools import chain
 from django.http import Http404
+from django.views.generic.list import ListView
 
 
 def login(request):
@@ -32,12 +33,29 @@ def logout(request):
     return redirect('login')
 
 
+def register(request):
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth.login(request, user)
+            messages.success(request, "Registration successful.")
+            return redirect("flux")
+        messages.error(request, "Unsuccessful registration")
+    form = NewUserForm
+    return render(request=request, template_name="register.html", context={"register_form": form})
+
+
 @login_required(login_url='login')
 def home(request):
     """"""
-    reviews = Review.objects.all()
-    ticketids = [review.ticket.id for review in reviews]
-    tickets = Ticket.objects.all().exclude(id__in=ticketids)
+    user = request.user
+    follows = UserFollows.objects.filter(user=user.id)
+    user_list = [user]
+    for users in follows:
+        user_list.append(users.followed_user.id)
+    reviews = Review.objects.all().filter(user__in=user_list)
+    tickets = Ticket.objects.all().filter(user__in=user_list)
     # tickets and reviews, sorted by time created
     combined = sorted(chain(tickets, reviews),
                       key=lambda instance: instance.time_created,
@@ -188,3 +206,14 @@ def unsubscribe(request, **kwargs):
     else:
         follow.delete()
     return redirect('subscribe')
+
+
+class UserSearchView(ListView):
+    """"""
+    model = User
+    template_name = 'search_results.html'
+    context_object_name = 'all_search_results'
+
+    def get_queryset(self):
+        query = self.request.GET.get('username')
+        return User.objects.filter(username__contains=query)

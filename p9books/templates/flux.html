@@ -6,13 +6,13 @@
     <a href="/new-review" class="btn btn-primary">Créer une critique</a>
 </div>
 
-<div class="container">
+<div class="container ">
     {% for obj in objects %}
         {% if obj.title %}
-            <div class="container border border-dark mb-5">
+            <div class="container border border-dark mb-5 p-3">
 
                 {% if obj.user == user %}
-                <div class="row mt-2 mb-2">
+                <div class="row mt-2 mb-2 ">
                     <div class="col-10">Vous avez demandé une critique</div>
                     <div class="col-2">{{obj.time_created}}</div>
                 </div>
@@ -43,7 +43,7 @@
                 </div>
             </div>
         {% else %}
-            <div class="container border border-dark mb-5">
+            <div class="container border border-dark mb-5 p-3">
 
                 {% if obj.user == user %}
                     <div class="row mt-2 mb-2">
