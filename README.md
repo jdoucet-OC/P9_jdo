@@ -2,7 +2,8 @@
 
 ## Introduction
 
-This python project is a django-based web application that allows users to create tickets which can be then answered by other users, with a review system.  
+This python project is a django-based web application that allows users to create tickets which can then be answered by other users, with a review system.  
+The web application is about book reviews.  
 Users can follow each others.  
 Any followed user's activity can be seen in the homepage.  
 
