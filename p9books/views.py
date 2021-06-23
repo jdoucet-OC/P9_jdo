@@ -43,7 +43,8 @@ def register(request):
             return redirect("flux")
         messages.error(request, "Unsuccessful registration")
     form = NewUserForm
-    return render(request=request, template_name="register.html", context={"register_form": form})
+    return render(request=request, template_name="register.html",
+                  context={"register_form": form})
 
 
 @login_required(login_url='login')
