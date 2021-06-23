@@ -22,3 +22,4 @@ linux / mac : `source env/bin/activate`
 ## Flake-8 Report
 To generate a Flake8-html report, use :  
 `flake8 --format=html --htmldir=flake-report`  
+Some files in the report show errors, which I cannot correct since those are django managed files.
