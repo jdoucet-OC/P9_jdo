@@ -15,7 +15,7 @@
                 <div class="row mt-2 mb-2">
                     <div class="col-10">{{obj.description}}</div>
                 </div>
-                <div class="row justify-content mt-2 mb-2">
+                <div class="row justify-content-end mt-2 mb-2">
                     <div class="col-2">
                         <a href="{% url 'edit-ticket' obj.id %}" class="btn btn-primary">Modifier</a>
                         <a href="{% url 'delete-ticket' obj.id %}" class="btn btn-primary">Supprimer</a>
@@ -27,6 +27,20 @@
                 <div class="row mt-2 mb-2">
                         <div class="col-10">Vous avez publié une critique</div>
                         <div class="col-2">{{obj.time_created}}</div>
+                </div>
+                <div class="row mt-2 mb-2">
+                        <div class="col-10">
+                            {{obj.headline}} -
+                            {% with ''|center:5 as range %}
+                            {% for _ in range %}
+                                {% if forloop.counter <= obj.rating %}
+                                <span class="fa fa-star checked"></span>
+                                {% else %}
+                                <span class="fa fa-star"></span>
+                                {% endif %}
+                            {% endfor %}
+                            {% endwith %}
+                        </div>
                 </div>
                 <div class="row mt-2 mb-2">
                         <div class="col-10">{{obj.body}}</div>
