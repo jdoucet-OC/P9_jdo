@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mb-3">
+<div class="d-flex justify-content-around mb-3">
     <a href="/new-ticket" class="btn btn-primary">Demander une critique</a>
     <a href="/new-review" class="btn btn-primary">Créer une critique</a>
 </div>
 
-<div class="container ">
+<div class="container">
     {% for obj in objects %}
         {% if obj.title %}
             <div class="container border border-dark mb-5 p-3">
@@ -56,6 +56,20 @@
                         <div class="col-2">{{obj.time_created}}</div>
                     </div>
                 {% endif %}
+                <div class="row mt-2 mb-2">
+                        <div class="col-10">
+                            {{obj.headline}} -
+                            {% with ''|center:5 as range %}
+                            {% for _ in range %}
+                                {% if forloop.counter <= obj.rating %}
+                                <span class="fa fa-star checked"></span>
+                                {% else %}
+                                <span class="fa fa-star"></span>
+                                {% endif %}
+                            {% endfor %}
+                            {% endwith %}
+                        </div>
+                </div>
                 <div class="row mt-2 mb-2">
                         <div class="col-10">{{obj.body}}</div>
                 </div>

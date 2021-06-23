@@ -30,8 +30,8 @@ class ReviewForm(ModelForm):
     class Meta:
         model = Review
         fields = ['headline', 'rating', 'body']
-        CHOICE = [('1', 0), ('2', 1), ('3', 2),
-                  ('4', 3), ('5', 4), ('6', 5)]
+        CHOICE = [('0', 0), ('1', 1), ('2', 2),
+                  ('3', 3), ('4', 4), ('5', 5)]
         widgets = {
             'headline': forms.TextInput(
                 attrs={
