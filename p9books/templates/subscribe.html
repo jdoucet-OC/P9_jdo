@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-5">
     <div class="container mb-5">
     <h3>Suivre d'autres utilisateurs</h3>
         <form action="{% url 'search-user' %}" method="get">
@@ -15,7 +15,7 @@
         {% for follow in follows %}
             <div class="container">
                 <div class="row border border-dark">
-                    <div class="col-10">{{follow.followed_user.username}}</div>
+                    <div class="col-10 pt-2">{{follow.followed_user.username}}</div>
                     <a href="{% url 'unsubscribe' follow.id %}" class="btn btn-primary col-2">Désabonner</a>
                 </div>
             </div>

@@ -57,11 +57,17 @@ def home(request):
         user_list.append(users.followed_user.id)
     reviews = Review.objects.all().filter(user__in=user_list)
     tickets = Ticket.objects.all().filter(user__in=user_list)
+    myreviews = Review.objects.all().filter(user=user)
+    # filter unanswered tickets
+    mytickets = []
+    for review in myreviews:
+        mytickets.append(review.ticket)
     # tickets and reviews, sorted by time created
     combined = sorted(chain(tickets, reviews),
                       key=lambda instance: instance.time_created,
                       reverse=True)
-    return render(request, 'flux.html', context={'objects': combined})
+    return render(request, 'flux.html',
+                  context={'objects': combined, 'reviews': mytickets})
 
 
 @login_required(login_url='login')
