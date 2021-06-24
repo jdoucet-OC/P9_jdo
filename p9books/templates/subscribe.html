@@ -2,26 +2,33 @@
 
 {% block content %}
 <div class="container">
+    <div class="container mb-5">
     <h3>Suivre d'autres utilisateurs</h3>
-    <form action="{% url 'search-user' %}" method="get">
-        <input type="text" name="username" placeholder="Chercher">
-        <button type="submit">Search</button>
-    </form>
-    <h3>Abonnements</h3>
-    {% for follow in follows %}
-        <div class="container">
-            <div class="row">
-                <div class="col-10 border border-dark">{{follow.followed_user.username}}</div>
-                <a href="{% url 'unsubscribe' follow.id %}" class="btn btn-primary col-2 border border-dark">Désabonner</a>
-            </div>
-        </div>
-    {% endfor %}
-
-    <h3>Abonnés</h3>
-    {% for follow in followed %}
-    <div class="container">
-        <div class="row border border-dark">{{follow.user.username}}</div>
+        <form action="{% url 'search-user' %}" method="get">
+            <input type="text" name="username" placeholder="Chercher">
+            <button class="btn-primary" type="submit">Search</button>
+        </form>
     </div>
-    {% endfor %}
+
+    <div class="container mb-5">
+    <h3>Abonnements</h3>
+        {% for follow in follows %}
+            <div class="container">
+                <div class="row border border-dark">
+                    <div class="col-10">{{follow.followed_user.username}}</div>
+                    <a href="{% url 'unsubscribe' follow.id %}" class="btn btn-primary col-2">Désabonner</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="container">
+        <h3>Abonnés</h3>
+        {% for follow in followed %}
+            <div class="container">
+                <div class="row border border-dark p-2">{{follow.user.username}}</div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

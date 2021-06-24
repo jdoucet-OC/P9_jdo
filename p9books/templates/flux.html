@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="d-flex justify-content-around mb-3">
+<div class="d-flex justify-content-around m-5">
     <a href="/new-ticket" class="btn btn-primary">Demander une critique</a>
     <a href="/new-review" class="btn btn-primary">Créer une critique</a>
 </div>
-
 <div class="container">
     {% for obj in objects %}
         {% if obj.title %}
-            <div class="container border border-dark mb-5 p-3">
-
+            <div class="container bg-white text-primary border border-dark mb-5 p-3">
+                <div class="d-flex justify-content-center text-dark"><h3>Demande</h3></div>
                 {% if obj.user == user %}
                 <div class="row mt-2 mb-2 ">
                     <div class="col-10">Vous avez demandé une critique</div>
@@ -43,8 +42,8 @@
                 </div>
             </div>
         {% else %}
-            <div class="container border border-dark mb-5 p-3">
-
+            <div class="container bg-primary text-white border border-dark mb-5 p-3">
+                <div class="d-flex justify-content-center text-dark"><h3>Critique</h3></div>
                 {% if obj.user == user %}
                     <div class="row mt-2 mb-2">
                         <div class="col-10">Vous avez publié une critique</div>
@@ -73,7 +72,7 @@
                 <div class="row mt-2 mb-2">
                         <div class="col-10">{{obj.body}}</div>
                 </div>
-                <div class="container border border-dark mb-3 mt-3">
+                <div class="container bg-white text-primary border border-dark mb-3 mt-3">
                     <div class="row mt-2 mb-2">
                         <div class="col-10">Ticket - {{obj.ticket.user}}</div>
                     </div>
