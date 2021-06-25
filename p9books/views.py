@@ -244,4 +244,5 @@ class UserSearchView(ListView):
         idlist = [userid]
         for follow in follows:
             idlist.append(follow.followed_user.id)
-        return User.objects.filter(username__contains=query).exclude(id__in=idlist)
+        query = User.objects.filter(username__contains=query)
+        return query.exclude(id__in=idlist)
