@@ -160,8 +160,10 @@ def edit_ticket(request, **kwargs):
     ticket = Ticket.objects.get(id=ticketid)
     if ticket.user != request.user:
         raise Http404("You are not allowed to edit this Ticket")
-    ticketform = TicketForm(request.POST or None, instance=ticket)
+    ticketform = TicketForm(request.POST or None,
+                            request.FILES or None, instance=ticket)
     if ticketform.is_valid():
+        ticket.image = ticketform.cleaned_data['image']
         ticketform.save()
         return redirect('posts')
     return render(request, "edit_ticket.html", {'ticketform': ticketform})

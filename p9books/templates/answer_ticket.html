@@ -15,6 +15,14 @@
                 <div class="row">
                     <div class="col-10">{{ticket.description}}</div>
                 </div>
+                {% load static %}
+                    {% if ticket.image %}
+                        <div class="row mt-2 mb-2">
+                            <div class="col-10">
+                                <img src="{{ticket.image.url}}"/>
+                            </div>
+                        </div>
+                {% endif %}
         </div>
     </div>
     <form method="POST" class="post-form border border-dark p-3">
