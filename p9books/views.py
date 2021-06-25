@@ -239,4 +239,9 @@ class UserSearchView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('username')
-        return User.objects.filter(username__contains=query)
+        userid = self.request.user.id
+        follows = UserFollows.objects.filter(user=userid)
+        idlist = [userid]
+        for follow in follows:
+            idlist.append(follow.followed_user.id)
+        return User.objects.filter(username__contains=query).exclude(id__in=idlist)
