@@ -77,9 +77,10 @@ def home(request):
 def make_ticket(request):
     """"""
     if request.method == 'POST':
-        form = TicketForm(request.POST, request.FILES or None)
+        form = TicketForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             ticket = form.save(commit=False)
+            ticket.image = form.cleaned_data['image']
             ticket.user = request.user
             ticket.save()
             return redirect('flux')
@@ -222,7 +223,9 @@ def unsubscribe(request, **kwargs):
 def new_subscribe(request, **kwargs):
     """"""
     userid = int(kwargs['userid'])
-    print(userid)
+    followeduser = User.objects.get(id=userid)
+    newfollow = UserFollows(user=request.user, followed_user=followeduser)
+    newfollow.save()
     return redirect('subscribe')
 
 

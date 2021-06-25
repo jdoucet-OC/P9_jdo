@@ -47,7 +47,6 @@ class ReviewForm(ModelForm):
                 choices=CHOICE,
                 attrs={
                     'class': 'custom-li',
-                    'id': 'testtt'
                 }
             )
         }

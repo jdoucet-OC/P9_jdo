@@ -84,10 +84,11 @@
                     <div class="row mt-2 mb-2">
                         <div class="col-10">{{obj.ticket.title}}</div>
                     </div>
-                    {% if obj.image %}
+                    {% load static %}
+                    {% if obj.ticket.image %}
                         <div class="row mt-2 mb-2">
                             <div class="col-10">
-                                <img src="{{obj.image.url}}"/>
+                                <img src="{{obj.ticket.image.url}}"/>
                             </div>
                         </div>
                     {% endif %}

@@ -19,6 +19,14 @@
                 <div class="row mt-2 mb-2">
                     <div class="col-10">{{obj.description}}</div>
                 </div>
+                {% load static %}
+                {% if obj.image %}
+                    <div class="row mt-2 mb-2">
+                        <div class="col-10">
+                            <img src="{{obj.image.url}}"/>
+                        </div>
+                    </div>
+                {% endif %}
                 <div class="row justify-content-end mt-2 mb-2">
                     <div class="col-2">
                         <a href="{% url 'edit-ticket' obj.id %}" class="btn btn-primary">Modifier</a>
@@ -57,10 +65,11 @@
                     <div class="row mt-2 mb-2">
                         <div class="col-10">{{obj.ticket.title}}</div>
                     </div>
-                    {% if obj.image %}
+                    {% load static %}
+                    {% if obj.ticket.image %}
                         <div class="row mt-2 mb-2">
                             <div class="col-10">
-                                <img src="{{obj.image.url}}"/>
+                                <img src="{{obj.ticket.image.url}}"/>
                             </div>
                         </div>
                     {% endif %}
