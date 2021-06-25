@@ -25,6 +25,8 @@ urlpatterns = [
             views.delete_review, name='delete-review'),
     re_path(r'unsubscribe/(?P<followid>[^/]+)$',
             views.unsubscribe, name='unsubscribe'),
+    re_path(r'new-subscribe/(?P<userid>[^/]+)$',
+            views.new_subscribe, name='new-subscribe'),
     path('search-user/', views.UserSearchView.as_view(),
          name='search-user')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

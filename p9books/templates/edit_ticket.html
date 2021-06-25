@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container mt-5">
-    <form method="POST" class="post-form">
+    <form method="POST" class="post-form border border-dark p-3">
         {% csrf_token %}
         {{ ticketform.as_p }}
 

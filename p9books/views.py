@@ -57,17 +57,20 @@ def home(request):
         user_list.append(users.followed_user.id)
     reviews = Review.objects.all().filter(user__in=user_list)
     tickets = Ticket.objects.all().filter(user__in=user_list)
-    myreviews = Review.objects.all().filter(user=user)
-    # filter unanswered tickets
+
+    # filter the tickets the user hasn't answered
     mytickets = []
+    myreviews = Review.objects.all().filter(user=user)
     for review in myreviews:
-        mytickets.append(review.ticket)
+        mytickets.append(review.ticket.id)
+    othertickets = Ticket.objects.all().exclude(id__in=mytickets)
+
     # tickets and reviews, sorted by time created
     combined = sorted(chain(tickets, reviews),
                       key=lambda instance: instance.time_created,
                       reverse=True)
     return render(request, 'flux.html',
-                  context={'objects': combined, 'reviews': mytickets})
+                  context={'objects': combined, 'other': othertickets})
 
 
 @login_required(login_url='login')
@@ -212,6 +215,14 @@ def unsubscribe(request, **kwargs):
         raise Http404("You are not allowed to edit this Review")
     else:
         follow.delete()
+    return redirect('subscribe')
+
+
+@login_required(login_url='login')
+def new_subscribe(request, **kwargs):
+    """"""
+    userid = int(kwargs['userid'])
+    print(userid)
     return redirect('subscribe')
 
 

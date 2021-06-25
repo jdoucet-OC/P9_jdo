@@ -9,7 +9,10 @@
         </form>
 
         {% for result in all_search_results %}
-            {{ result.username }}
+            <div class="row border border-dark w-50">
+                <div class="col-8 pt-2">{{result.username}}</div>
+                <a href="{% url 'new-subscribe' result.id %}" class="btn btn-primary col-4">Abonner</a>
+            </div>
         {% empty %}
             <div>Aucun utilisateur trouvé</div>
         {% endfor %}

@@ -2,9 +2,23 @@
 
 {% block content %}
 <div class="container mt-5">
+    <div class="container border border-dark p-4">
+            <div>Vous êtes en train de modifier en réponse à</div>
+            <div class="container w-75 border border-dark mt-2 mb-2 p-2">
+                <div class="row">
+                        <div class="col-10">Vous avez a demandé une critique</div>
+                        <div class="col-2">{{ticket.time_created}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10">{{ticket.title}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10">{{ticket.description}}</div>
+                    </div>
+            </div>
+    </div>
 
-{{ticket.title}}
-    <form method="POST" class="post-form">
+    <form method="POST" class="post-form border border-dark p-3">
         {% csrf_token %}
         {{ reviewform.as_p }}
 
