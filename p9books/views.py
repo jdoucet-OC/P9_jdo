@@ -10,7 +10,10 @@ from django.views.generic.list import ListView
 
 
 def login(request):
-    """"""
+    """
+    :param request: request object
+    :return: login view
+    """
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -28,12 +31,19 @@ def login(request):
 
 
 def logout(request):
-    """"""
+    """
+    :param request: request object
+    :return: allows logout
+    """
     auth.logout(request)
     return redirect('login')
 
 
 def register(request):
+    """
+    :param request: request object
+    :return: register view
+    """
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
@@ -49,7 +59,11 @@ def register(request):
 
 @login_required(login_url='login')
 def home(request):
-    """"""
+    """
+    :param request: request object
+    :return: flux homepage, shows tickets and reviews
+    from oneself and the followed users
+    """
     user = request.user
     follows = UserFollows.objects.filter(user=user.id)
     user_list = [user]
@@ -75,7 +89,10 @@ def home(request):
 
 @login_required(login_url='login')
 def make_ticket(request):
-    """"""
+    """
+    :param request: request object
+    :return: ticket creation view
+    """
     if request.method == 'POST':
         form = TicketForm(data=request.POST, files=request.FILES)
         if form.is_valid():
@@ -91,7 +108,10 @@ def make_ticket(request):
 
 @login_required(login_url='login')
 def make_review(request):
-    """"""
+    """
+    :param request: request object
+    :return: review creation view
+    """
     if request.method == 'POST':
         reviewform = ReviewForm(request.POST)
         ticketform = TicketForm(request.POST, request.FILES or None)
@@ -113,7 +133,11 @@ def make_review(request):
 
 @login_required(login_url='login')
 def subscribe(request):
-    """"""
+    """
+    :param request: request object
+    :return: followers view, followed
+    users and the followers
+    """
     user = request.user
     follows = UserFollows.objects.filter(user=user.id)
     followed = UserFollows.objects.filter(followed_user=user.id)
@@ -123,7 +147,10 @@ def subscribe(request):
 
 @login_required(login_url='login')
 def posts(request):
-    """"""
+    """
+    :param request: request object
+    :return: own post view ( tickets, reviews )
+    """
     user = request.user
     tickets = Ticket.objects.filter(user=user.id)
     reviews = Review.objects.filter(user=user.id)
@@ -135,7 +162,13 @@ def posts(request):
 
 @login_required(login_url='login')
 def answer_ticket(request, **kwargs):
-    """"""
+    """
+    :param request: request object
+    :param kwargs: tiquetid : database id of the ticket
+    the review responds to
+    :return: review creation view, responding to a
+    ticket
+    """
     ticketid = int(kwargs['tiquetid'])
     ticket = Ticket.objects.get(id=ticketid)
     if request.method == 'POST':
@@ -155,7 +188,12 @@ def answer_ticket(request, **kwargs):
 
 @login_required(login_url='login')
 def edit_ticket(request, **kwargs):
-    """"""
+    """
+    :param request: request object
+    :param kwargs: tiquetid : database id of the
+    ticket being edited
+    :return: ticket edition view
+    """
     ticketid = int(kwargs['tiquetid'])
     ticket = Ticket.objects.get(id=ticketid)
     if ticket.user != request.user:
@@ -171,7 +209,12 @@ def edit_ticket(request, **kwargs):
 
 @login_required(login_url='login')
 def edit_review(request, **kwargs):
-    """"""
+    """
+    :param request: request object
+    :param kwargs: reviewid : database id of the
+    review being edited
+    :return: review edition view
+    """
     reviewid = int(kwargs['reviewid'])
     review = Review.objects.get(id=reviewid)
     if review.user != request.user:
@@ -187,7 +230,12 @@ def edit_review(request, **kwargs):
 
 @login_required(login_url='login')
 def delete_ticket(request, **kwargs):
-    """"""
+    """
+    :param request: request object
+    :param kwargs: tiquetid : database id of the ticket
+    being deleted
+    :return: ticket deletion view
+    """
     ticketid = int(kwargs['tiquetid'])
     ticket = Ticket.objects.get(id=ticketid)
     if ticket.user != request.user:
@@ -199,7 +247,12 @@ def delete_ticket(request, **kwargs):
 
 @login_required(login_url='login')
 def delete_review(request, **kwargs):
-    """"""
+    """
+    :param request: request object
+    :param kwargs: reviewid : database id of the review
+    being deleted
+    :return: review deletion view
+    """
     reviewid = int(kwargs['reviewid'])
     review = Review.objects.get(id=reviewid)
     if review.user != request.user:
@@ -211,7 +264,12 @@ def delete_review(request, **kwargs):
 
 @login_required(login_url='login')
 def unsubscribe(request, **kwargs):
-    """"""
+    """
+    :param request: request object
+    :param kwargs: followid : database id of the
+    userfollow object being deleted
+    :return: userfollow deletion view
+    """
     followid = int(kwargs['followid'])
     follow = UserFollows.objects.get(id=followid)
     if follow.user != request.user:
@@ -223,7 +281,12 @@ def unsubscribe(request, **kwargs):
 
 @login_required(login_url='login')
 def new_subscribe(request, **kwargs):
-    """"""
+    """
+    :param request: request object
+    :param kwargs: userid : database id of the
+    user being followed_user in userfollow model
+    :return: new userfollow object
+    """
     userid = int(kwargs['userid'])
     followeduser = User.objects.get(id=userid)
     newfollow = UserFollows(user=request.user, followed_user=followeduser)
@@ -232,12 +295,23 @@ def new_subscribe(request, **kwargs):
 
 
 class UserSearchView(ListView):
-    """"""
+    """
+    model : User
+        django User object
+    template_name : str
+        template used for search bar
+    context_object_name : str
+        context variable used (template)
+    """
     model = User
     template_name = 'search_results.html'
     context_object_name = 'all_search_results'
 
     def get_queryset(self):
+        """
+        :return: user search bar, excluding already
+        followed user and current user
+        """
         query = self.request.GET.get('username')
         userid = self.request.user.id
         follows = UserFollows.objects.filter(user=userid)

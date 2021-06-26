@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 class TicketForm(ModelForm):
     """"""
     class Meta:
+        """"""
         model = Ticket
         fields = ['title', 'description', 'image']
         widgets = {
@@ -28,6 +29,7 @@ class TicketForm(ModelForm):
 class ReviewForm(ModelForm):
     """"""
     class Meta:
+        """"""
         model = Review
         fields = ['headline', 'rating', 'body']
         CHOICE = [('0', 0), ('1', 1), ('2', 2),
@@ -53,12 +55,14 @@ class ReviewForm(ModelForm):
 
 
 class NewUserForm(UserCreationForm):
-
+    """"""
     class Meta:
+        """"""
         model = User
         fields = ("username", "password1", "password2")
 
     def __init__(self, *args, **kwargs):
+        """"""
         super(NewUserForm, self).__init__(*args, **kwargs)
 
         self.fields['username'].widget.attrs['class'] = 'form-control'
@@ -72,6 +76,10 @@ class NewUserForm(UserCreationForm):
         self.fields['password2'].label = 'Confirmez mot de passe'
 
     def save(self, commit=True):
+        """
+        :param commit: save commit, True
+        :return: saves the new user registered
+        """
         user = super(NewUserForm, self).save(commit=False)
         if commit:
             user.save()
